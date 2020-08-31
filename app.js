@@ -7,17 +7,23 @@ const port = process.env.PORT || 4000
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.post('/webhook', (req, res) => {
-  // const client = new line.Client({
-  //   channelAccessToken: 'Mz+DV1Z3aSuQ65BJ9O6gW9f/JU524lLrGfrtj/gb5m48KU0VmoQxJ3ZVRw71e+Up1UlZgUxrkRY6KC8unOAAN/tWXDXOz+8U0WefjdLObzr2FzFuXnxwlteTJDxWKfR5zO4xH5VLnkSfbLW5joeGHQdB04t89/1O/w1cDnyilFU='
-  // });
+  const client = new line.Client({
+    channelAccessToken: 'Mz+DV1Z3aSuQ65BJ9O6gW9f/JU524lLrGfrtj/gb5m48KU0VmoQxJ3ZVRw71e+Up1UlZgUxrkRY6KC8unOAAN/tWXDXOz+8U0WefjdLObzr2FzFuXnxwlteTJDxWKfR5zO4xH5VLnkSfbLW5joeGHQdB04t89/1O/w1cDnyilFU='
+  });
+  client.getProfile('<userId>')
+    .then((profile) => {
+      let reply_token = req.body.events[0].replyToken
+      let msg = req.body.events[0].message.text
+      reply(reply_token, msg, profile)
+      res.sendStatus(200)
+    })
+    .catch((err) => {
+      // error handling
+    });
 
-  let reply_token = req.body.events[0].replyToken
-  let msg = req.body.events[0].message.text
-  reply(reply_token, msg)
-  res.sendStatus(200)
 })
 app.listen(port)
-function reply (reply_token, msg) {
+function reply (reply_token, msg, profile) {
   let headers = {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer {Mz+DV1Z3aSuQ65BJ9O6gW9f/JU524lLrGfrtj/gb5m48KU0VmoQxJ3ZVRw71e+Up1UlZgUxrkRY6KC8unOAAN/tWXDXOz+8U0WefjdLObzr2FzFuXnxwlteTJDxWKfR5zO4xH5VLnkSfbLW5joeGHQdB04t89/1O/w1cDnyilFU=}'
@@ -28,11 +34,11 @@ function reply (reply_token, msg) {
         to: '',
         messages: [{
           type: 'text',
-          text: 'Hello'
+          text: 'Hello' + profile.userId
         },
         {
           type: 'text',
-          text: 'How are you?'
+          text: 'How are you?' + profile.displayName
         }]
       })
     }, 10000);
