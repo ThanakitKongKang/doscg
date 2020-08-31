@@ -18,5 +18,13 @@ export default {
   },
   getTest () {
     return this.execute('get', '/test')
+  },
+  getMissingNumbers (numbers) {
+    const data = JSON.stringify(numbers)
+    return this.execute('post', '/missingNumbers', { data })
+  },
+  findValues (values) {
+    const data = JSON.stringify(values)
+    return this.execute('post', '/findValues', { data })
   }
 }
