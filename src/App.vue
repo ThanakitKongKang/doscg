@@ -76,13 +76,19 @@ body {
   height: 100%;
   margin: 0;
 }
+body {
+  display: flex;
+  flex-direction: column;
+}
 .wrapper {
   min-height: 100%;
   margin-bottom: -50px;
+  flex: 1 0 auto;
 }
 .footer,
 .push {
-  height: 50px;
+  flex-shrink: 0;
+  height: 5rem;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
