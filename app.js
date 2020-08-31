@@ -14,7 +14,8 @@ app.post('/webhook', (req, res) => {
     .then((profile) => {
       let reply_token = req.body.events[0].replyToken
       let msg = req.body.events[0].message.text
-      reply(reply_token, msg, profile)
+      let userId = req.body.events[0].userId
+      reply(reply_token, msg, profile, userId)
       res.sendStatus(200)
     })
     .catch((err) => {
@@ -23,7 +24,7 @@ app.post('/webhook', (req, res) => {
 
 })
 app.listen(port)
-function reply (reply_token, msg, profile) {
+function reply (reply_token, msg, profile, userId) {
   let headers = {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer {Mz+DV1Z3aSuQ65BJ9O6gW9f/JU524lLrGfrtj/gb5m48KU0VmoQxJ3ZVRw71e+Up1UlZgUxrkRY6KC8unOAAN/tWXDXOz+8U0WefjdLObzr2FzFuXnxwlteTJDxWKfR5zO4xH5VLnkSfbLW5joeGHQdB04t89/1O/w1cDnyilFU=}'
@@ -34,7 +35,7 @@ function reply (reply_token, msg, profile) {
         to: '',
         messages: [{
           type: 'text',
-          text: 'Hello' + profile.userId
+          text: 'Hello' + profile.userId + ' ' + userId
         },
         {
           type: 'text',
