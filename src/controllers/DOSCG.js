@@ -4,9 +4,42 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const app = express()
 const request = require('request')
+const middleware = require('@line/bot-sdk').middleware
 
 app.use(morgan('tiny'))
 app.use(cors())
+const config = {
+  channelAccessToken: 'Mz+DV1Z3aSuQ65BJ9O6gW9f/JU524lLrGfrtj/gb5m48KU0VmoQxJ3ZVRw71e+Up1UlZgUxrkRY6KC8unOAAN/tWXDXOz+8U0WefjdLObzr2FzFuXnxwlteTJDxWKfR5zO4xH5VLnkSfbLW5joeGHQdB04t89/1O/w1cDnyilFU=',
+  channelSecret: '3ca25efb8a31534ddc0de42ac9486fd0'
+}
+
+app.post('/callback', middleware(config), (req, res) => {
+  let replyToken = req.body.events[0].replyToken
+  let msg = req.body.events[0].message.text
+  reply(replyToken, msg)
+  res.sendStatus(200)
+})
+function reply (replyToken, msg) {
+  let headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer {Mz+DV1Z3aSuQ65BJ9O6gW9f/JU524lLrGfrtj/gb5m48KU0VmoQxJ3ZVRw71e+Up1UlZgUxrkRY6KC8unOAAN/tWXDXOz+8U0WefjdLObzr2FzFuXnxwlteTJDxWKfR5zO4xH5VLnkSfbLW5joeGHQdB04t89/1O/w1cDnyilFU=}'
+  }
+  let body = JSON.stringify({
+    replyToken: replyToken,
+    messages: [{
+      type: 'text',
+      text: msg
+    }]
+  })
+  request.post({
+    url: 'https://api.line.me/v2/bot/message/reply',
+    headers: headers,
+    body: body
+  }, (err, res, body) => {
+    console.log('status = ' + res.statusCode, err, body)
+  })
+}
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: true
@@ -127,35 +160,7 @@ app.post('/findValues', (req, res) => {
   }
 })
 
-app.post('/callback', (req, res) => {
-  let replyToken = req.body.events[0].replyToken
-  let msg = req.body.events[0].message.text
-  reply(replyToken, msg)
-  res.sendStatus(200)
-})
-
 const port = process.env.PORT || 4000
 app.listen(port, () => {
   console.log(`listening on ${port}`)
 })
-
-function reply (replyToken, msg) {
-  let headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer {Mz+DV1Z3aSuQ65BJ9O6gW9f/JU524lLrGfrtj/gb5m48KU0VmoQxJ3ZVRw71e+Up1UlZgUxrkRY6KC8unOAAN/tWXDXOz+8U0WefjdLObzr2FzFuXnxwlteTJDxWKfR5zO4xH5VLnkSfbLW5joeGHQdB04t89/1O/w1cDnyilFU=}'
-  }
-  let body = JSON.stringify({
-    replyToken: replyToken,
-    messages: [{
-      type: 'text',
-      text: msg
-    }]
-  })
-  request.post({
-    url: 'https://api.line.me/v2/bot/message/reply',
-    headers: headers,
-    body: body
-  }, (err, res, body) => {
-    console.log('status = ' + res.statusCode, err, body)
-  })
-}
