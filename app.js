@@ -10,11 +10,11 @@ app.post('/webhook', (req, res) => {
   let reply_token = req.body.events[0].replyToken
   let msg = req.body.events[0].message.text
   let userId = req.body.events[0].userId
-  reply(reply_token, msg, profile, userId)
+  reply(reply_token, msg, userId)
   res.sendStatus(200)
 })
 app.listen(port)
-function reply (reply_token, msg, profile, userId) {
+function reply (reply_token, msg, userId) {
   let headers = {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer {Mz+DV1Z3aSuQ65BJ9O6gW9f/JU524lLrGfrtj/gb5m48KU0VmoQxJ3ZVRw71e+Up1UlZgUxrkRY6KC8unOAAN/tWXDXOz+8U0WefjdLObzr2FzFuXnxwlteTJDxWKfR5zO4xH5VLnkSfbLW5joeGHQdB04t89/1O/w1cDnyilFU=}'
@@ -25,11 +25,11 @@ function reply (reply_token, msg, profile, userId) {
         to: userId,
         messages: [{
           type: 'text',
-          text: 'Hello' + profile.userId + ' ' + userId
+          text: 'Hello' + userId
         },
         {
           type: 'text',
-          text: 'How are you?' + profile.displayName
+          text: 'How are you?'
         }]
       })
       request.post({
@@ -45,11 +45,11 @@ function reply (reply_token, msg, profile, userId) {
       replyToken: reply_token,
       messages: [{
         type: 'text',
-        text: 'Hello' + res.userId
+        text: 'Hello'
       },
       {
         type: 'text',
-        text: 'How are you?' + res.displayName
+        text: 'How are you?'
       }]
     })
     request.post({
