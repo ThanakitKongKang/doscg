@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import api from '@/api'
+// import api from '@/api'
 export default {
   name: 'LineBot',
   data () {
@@ -34,22 +34,22 @@ export default {
     }
   },
   async created () {
-    this.callBack()
+    // this.callBack()
   },
   methods: {
-    callBack (evt) {
-      api.findValues(this.form.values).then((res) => {
-        if (!res.results) {
-          this.showDismissibleAlert = true
-          this.results = 'No data'
-          this.isResult = false
-        } else {
-          this.showDismissibleAlert = false
-          this.results = JSON.parse(res.results).result
-          this.isResult = true
-        }
-      })
-    }
+    // callBack (evt) {
+    //   api.webHook(this.form.values).then((res) => {
+    //     if (!res.results) {
+    //       this.showDismissibleAlert = true
+    //       this.results = 'No data'
+    //       this.isResult = false
+    //     } else {
+    //       this.showDismissibleAlert = false
+    //       this.results = JSON.parse(res.results).result
+    //       this.isResult = true
+    //     }
+    //   })
+    // }
   }
 }
 </script>

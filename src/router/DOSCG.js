@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import FindValues from '@/components/FindValues'
 import MissingNumbers from '@/components/MissingNumbers'
 import GoogleMaps from '@/components/GoogleMaps'
+import LineBot from '@/components/LineBot'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
       path: '/google-maps',
       name: 'GoogleMaps',
       component: GoogleMaps
+    },
+    {
+      path: '/line-bot',
+      name: 'LineBot',
+      component: LineBot
     }
   ]
 })

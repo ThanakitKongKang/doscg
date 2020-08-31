@@ -26,5 +26,9 @@ export default {
   findValues (values) {
     const data = JSON.stringify(values)
     return this.execute('post', '/findValues', { data })
+  },
+  webHook (values) {
+    const data = JSON.stringify(values)
+    return this.execute('post', '/callback', { data })
   }
 }
