@@ -22,7 +22,7 @@ function reply (reply_token, msg) {
     setTimeout(() => {
       headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Bearer x6SFl0tcbqc00ixjrWU7dRmrFPQtEZfEBS3NQ6vg4Mm'
+        'Authorization': 'Bearer pHkFoFvgKNbtBJ2vDa8589Z0CioVaiX3yJfb4H4tOet'
       }
       let body = JSON.stringify({
         // to: 'Ua713b8f663a3db5709fd064dc588139e',
