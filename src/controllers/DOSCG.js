@@ -3,6 +3,7 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const app = express()
+const request = require('request')
 
 app.use(morgan('tiny'))
 app.use(cors())
@@ -127,6 +128,8 @@ app.post('/findValues', (req, res) => {
 })
 
 app.get('/callback', (req, res) => {
+  let replyToken = req.body.events[0].replyToken
+  reply(replyToken)
   res.sendStatus(200)
 })
 
@@ -134,3 +137,28 @@ app.get('/callback', (req, res) => {
 app.listen(80, () => {
   // console.log(`listening on ${port}`)
 })
+
+function reply (replyToken) {
+  let headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer {Mz+DV1Z3aSuQ65BJ9O6gW9f/JU524lLrGfrtj/gb5m48KU0VmoQxJ3ZVRw71e+Up1UlZgUxrkRY6KC8unOAAN/tWXDXOz+8U0WefjdLObzr2FzFuXnxwlteTJDxWKfR5zO4xH5VLnkSfbLW5joeGHQdB04t89/1O/w1cDnyilFU=}'
+  }
+  let body = JSON.stringify({
+    replyToken: replyToken,
+    messages: [{
+      type: 'text',
+      text: 'Hello'
+    },
+    {
+      type: 'text',
+      text: 'How are you?'
+    }]
+  })
+  request.post({
+    url: 'https://api.line.me/v2/bot/message/reply',
+    headers: headers,
+    body: body
+  }, (err, res, body) => {
+    console.log('status = ' + res.statusCode, err, body)
+  })
+}

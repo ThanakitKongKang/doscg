@@ -19,6 +19,7 @@
     "google-maps": "^4.3.2",
     "google-maps-api-loader": "^1.1.1",
     "morgan": "^1.10.0",
+    "request": "^2.88.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
