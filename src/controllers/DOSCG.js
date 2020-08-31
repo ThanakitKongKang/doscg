@@ -127,18 +127,19 @@ app.post('/findValues', (req, res) => {
   }
 })
 
-app.get('/callback', (req, res) => {
+app.post('/callback', (req, res) => {
   let replyToken = req.body.events[0].replyToken
-  reply(replyToken)
+  let msg = req.body.events[0].message.text
+  reply(replyToken, msg)
   res.sendStatus(200)
 })
 
-// const port = process.env.PORT || 4000
-app.listen(80, () => {
-  // console.log(`listening on ${port}`)
+const port = process.env.PORT || 4000
+app.listen(port, () => {
+  console.log(`listening on ${port}`)
 })
 
-function reply (replyToken) {
+function reply (replyToken, msg) {
   let headers = {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer {Mz+DV1Z3aSuQ65BJ9O6gW9f/JU524lLrGfrtj/gb5m48KU0VmoQxJ3ZVRw71e+Up1UlZgUxrkRY6KC8unOAAN/tWXDXOz+8U0WefjdLObzr2FzFuXnxwlteTJDxWKfR5zO4xH5VLnkSfbLW5joeGHQdB04t89/1O/w1cDnyilFU=}'
@@ -147,11 +148,7 @@ function reply (replyToken) {
     replyToken: replyToken,
     messages: [{
       type: 'text',
-      text: 'Hello'
-    },
-    {
-      type: 'text',
-      text: 'How are you?'
+      text: msg
     }]
   })
   request.post({
