@@ -22,7 +22,7 @@ function reply (reply_token, msg, userId) {
   if (msg.toLowerCase() !== 'hey') {
     setTimeout(() => {
       let body = JSON.stringify({
-        to: userId,
+        to: 'Ua713b8f663a3db5709fd064dc588139e',
         messages: [{
           type: 'text',
           text: 'Hello' + userId
