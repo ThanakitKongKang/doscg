@@ -48,17 +48,17 @@ function reply (replyToken, msg) {
         console.log(user)
         if (user.users) {
           user.users.map(ACCESS_TOKEN => {
-            headers = {
+            let headers_noti = {
               'Content-Type': 'application/x-www-form-urlencoded',
               'Authorization': 'Bearer ' + ACCESS_TOKEN
             }
             console.log(ACCESS_TOKEN)
-            let body = {
+            let body = JSON.stringify({
               message: 'Can\'t answer customer a question!'
-            }
+            })
             request.post({
               url: 'https://notify-api.line.me/api/notify',
-              headers: headers,
+              headers: headers_noti,
               body: body
             }, (err, res, body) => {
               console.log('status = ' + res.statusCode, err)
