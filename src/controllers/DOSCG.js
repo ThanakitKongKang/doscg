@@ -46,14 +46,12 @@ function reply (replyToken, msg) {
           throw err
         }
         const user = JSON.parse(data.toString())
-        console.log(user)
         if (user.users) {
           user.users.map(ACCESS_TOKEN => {
             headers = {
               'Content-Type': 'application/x-www-form-urlencoded',
               'Authorization': 'Bearer ' + ACCESS_TOKEN
             }
-            console.log(ACCESS_TOKEN)
             let body = JSON.stringify({
               messages: 'Can\'t answer customer a question!'
             })
