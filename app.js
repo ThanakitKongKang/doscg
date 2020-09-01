@@ -53,19 +53,35 @@ function reply (replyToken, msg) {
               'Content-Type': 'application/x-www-form-urlencoded',
               'Authorization': 'Bearer ' + ACCESS_TOKEN
             }
-            console.log(ACCESS_TOKEN)
-            let body = JSON.stringify({
+            console.log(headers_noti)
+            let body_noti = JSON.stringify({
               message: 'Can\'t answer customer a question!'
             })
+            console.log(body_noti)
             request.post({
               url: 'https://notify-api.line.me/api/notify',
               headers: headers_noti,
-              body: body
+              body: body_noti
             }, (err, res, body) => {
               console.log('status = ' + res.statusCode, err)
             })
           })
         }
+        console.log("testing")
+        let testh = {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer 57ER1juQzf27cRUfWzir9JsgZgwHgcupmgsrA2UfCvI'
+        }
+        request.post({
+          url: 'https://notify-api.line.me/api/notify',
+          headers: testh,
+          body: {
+            message: 'Can\'t answer customer a question!'
+          }
+        }, (err, res, body) => {
+          console.log('status = ' + res.statusCode, err)
+        })
+        console.log("done testing")
       })
       let body = JSON.stringify({
         replyToken: replyToken,
