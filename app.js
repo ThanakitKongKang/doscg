@@ -1,8 +1,8 @@
 const express = require('express')
-const line = require('@line/bot-sdk');
 const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
+const fs = require('fs')
 const port = process.env.PORT || 4000
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -26,23 +26,24 @@ function reply (reply_token, msg) {
           throw err
         }
         const user = JSON.parse(data.toString())
-        user.users.map(ACCESS_TOKEN => {
-          headers = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Bearer ' + ACCESS_TOKEN
-          }
-          let body = JSON.stringify({
-            messages: 'Can\'t answer customer a question!'
-          })
-          request.post({
-            url: 'https://notify-api.line.me/api/notify',
-            headers: headers,
-            body: body
-          }, (err, res, body) => {
-            console.log('status = ' + res.statusCode);
+        if (user.users) {
+          user.users.map(ACCESS_TOKEN => {
+            headers = {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': 'Bearer ' + ACCESS_TOKEN
+            }
+            let body = JSON.stringify({
+              messages: 'Can\'t answer customer a question!'
+            })
+            request.post({
+              url: 'https://notify-api.line.me/api/notify',
+              headers: headers,
+              body: body
+            }, (err, res, body) => {
+              console.log('status = ' + res.statusCode);
+            });
           });
-        });
-
+        }
       })
       let body = JSON.stringify({
         replyToken: reply_token,
