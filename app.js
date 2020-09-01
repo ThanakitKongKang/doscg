@@ -49,38 +49,48 @@ function reply (replyToken, msg) {
         console.log(user)
         if (user.users) {
           user.users.map(ACCESS_TOKEN => {
-            let headers_noti = {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'Authorization': 'Bearer ' + ACCESS_TOKEN
-            }
+
             console.log(headers_noti)
-            let body_noti = JSON.stringify({
-              message: 'Can\'t answer customer a question!'
-            })
+            let body_noti = qs.stringify({
+              'message': 'Can\'t answer customer a question!'
+            });
             console.log(body_noti)
-            request.post({
+            var config = {
+              method: 'post',
               url: 'https://notify-api.line.me/api/notify',
-              headers: headers_noti,
-              body: body_noti
-            }, (err, res, body) => {
-              console.log('status = ' + res.statusCode, err)
-            })
+              headers: {
+                'Authorization': 'Bearer ' + ACCESS_TOKEN,
+                'Content-Type': 'application/x-www-form-urlencoded'
+              },
+              data: body_noti
+            };
+            console.log(config)
+            axios(config)
+              .then(function (response) {
+                console.log(JSON.stringify(response.data));
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
           })
         }
+
         console.log("testing")
-        let testh = {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Bearer 57ER1juQzf27cRUfWzir9JsgZgwHgcupmgsrA2UfCvI'
-        }
-        request.post({
-          url: 'https://notify-api.line.me/api/notify',
-          headers: testh,
-          body: {
-            message: 'Can\'t answer customer a question!'
+        var options = {
+          'method': 'POST',
+          'url': 'https://notify-api.line.me/api/notify',
+          'headers': {
+            'Authorization': 'Bearer 57ER1juQzf27cRUfWzir9JsgZgwHgcupmgsrA2UfCvI',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          form: {
+            'message': '1'
           }
-        }, (err, res, body) => {
-          console.log('status = ' + res.statusCode, err)
-        })
+        };
+        request(options, function (error, response) {
+          if (error) throw new Error(error);
+          console.log(response.body);
+        });
         console.log("done testing")
       })
       let body = JSON.stringify({
