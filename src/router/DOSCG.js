@@ -4,6 +4,7 @@ import FindValues from '@/components/FindValues'
 import MissingNumbers from '@/components/MissingNumbers'
 import GoogleMaps from '@/components/GoogleMaps'
 import LineBot from '@/components/LineBot'
+import Resume from '@/components/Resume'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/line-callback',
       name: 'LineBot',
       component: LineBot
+    },
+    {
+      path: '/cv',
+      name: 'Resume',
+      component: Resume
     }
   ]
 })

@@ -30,7 +30,7 @@
           </b-list-group-item>
           <b-list-group-item class="m-0">
             Try to send message to @355frgxr (doscg line bot)
-            <div class="text-secondary">e.g. "Hey", "Hello"</div>
+            <div class="text-secondary">bot can only answer to "Hey"</div>
           </b-list-group-item>
         </b-list-group>
       </b-card>
