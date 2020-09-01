@@ -11,7 +11,7 @@ app.use(morgan('tiny'))
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-const PATH_USER_JSON = '../../src/assets/user.json'
+const PATH_USER_JSON = './src/assets/user.json'
 
 app.get('/users', (req, res) => {
   fs.readFile(PATH_USER_JSON, 'utf-8', (err, data) => {
