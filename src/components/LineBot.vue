@@ -8,9 +8,9 @@
       >
         <b-list-group>
           <b-list-group-item class="m-0">
-            Add bot ID :@355frgxr<br>
+            <div class="mb-3">Add bot ID : @355frgxr</div>
             <div
-              class="line-it-button mt-3"
+              class="line-it-button"
               data-lang="en"
               data-type="friend"
               data-lineid="@355frgxr"
@@ -19,17 +19,18 @@
             ></div>
           </b-list-group-item>
           <b-list-group-item class="m-0">
-            get line notify
+            Get LINE notify
             <a
               ref="submit"
               type="button"
               variant="success"
               class="mt-3"
               v-bind:href="href"
-            >Register</a>
+            >CLICK</a>
           </b-list-group-item>
           <b-list-group-item class="m-0">
-            try to send message to bot
+            Try to send message to @355frgxr (doscg line bot)
+            <div class="text-secondary">e.g. "Hey", "Hello"</div>
           </b-list-group-item>
         </b-list-group>
       </b-card>

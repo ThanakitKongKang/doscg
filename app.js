@@ -32,7 +32,7 @@ function reply (reply_token, msg) {
             'Authorization': 'Bearer ' + ACCESS_TOKEN
           }
           let body = JSON.stringify({
-            messages: 'Can\'t answer customer question'
+            messages: 'Can\'t answer customer a question!'
           })
           request.post({
             url: 'https://notify-api.line.me/api/notify',
@@ -44,8 +44,20 @@ function reply (reply_token, msg) {
         });
 
       })
-
-
+      let body = JSON.stringify({
+        replyToken: reply_token,
+        messages: [{
+          type: 'text',
+          text: 'Coundn\'t answer, informing admin, please wait'
+        }]
+      })
+      request.post({
+        url: 'https://api.line.me/v2/bot/message/reply',
+        headers: headers,
+        body: body
+      }, (err, res, body) => {
+        console.log('status = ' + res.statusCode);
+      });
     }, 10000);
   } else {
     let body = JSON.stringify({
