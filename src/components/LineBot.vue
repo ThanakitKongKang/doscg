@@ -54,6 +54,8 @@ import api from '@/api'
 export default {
   name: 'LineBot',
   data () {
+    // https://notify-bot.line.me/oauth/authorize?&
+    // response_type=code&redirect_uri=https://doscg-linebot.herokuapp.com/line-callback&client_id=ug5Dj546tVlA0b9ONLqHwI&client_secret=Pqwp0ypsl3JZxPEiCocIsfh7ANOiAgVOmWuoORWEyBD&scope=notify&state=abcdef123456
     let LINE_API_URI = 'https://notify-bot.line.me/oauth/authorize?'
     let q = {
       'response_type': 'code',

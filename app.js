@@ -31,7 +31,6 @@ app.post('/webhook', (req, res) => {
   let replyToken = req.body.events[0].replyToken
   let msg = req.body.events[0].message.text
   reply(replyToken, msg)
-  res.sendStatus(200)
 })
 
 function reply (replyToken, msg) {
@@ -54,9 +53,9 @@ function reply (replyToken, msg) {
               'Authorization': 'Bearer ' + ACCESS_TOKEN
             }
             console.log(ACCESS_TOKEN)
-            let body = JSON.stringify({
-              messages: 'Can\'t answer customer a question!'
-            })
+            let body = {
+              message: 'Can\'t answer customer a question!'
+            }
             request.post({
               url: 'https://notify-api.line.me/api/notify',
               headers: headers,
@@ -228,6 +227,7 @@ app.post('/line-callback', (req, res) => {
   const { body } = req
   const code = body.code
   let LINE_API_TOKEN = 'https://notify-bot.line.me/oauth/token'
+  console.log("code" + code)
   let data = qs.stringify({
     'grant_type': 'authorization_code',
     'code': code,
