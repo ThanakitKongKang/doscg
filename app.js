@@ -49,8 +49,6 @@ function reply (replyToken, msg) {
         console.log(user)
         if (user.users) {
           user.users.map(ACCESS_TOKEN => {
-
-            console.log(headers_noti)
             let body_noti = qs.stringify({
               'message': 'Can\'t answer customer a question!'
             });
@@ -74,25 +72,8 @@ function reply (replyToken, msg) {
               });
           })
         }
-
-        console.log("testing")
-        var options = {
-          'method': 'POST',
-          'url': 'https://notify-api.line.me/api/notify',
-          'headers': {
-            'Authorization': 'Bearer 57ER1juQzf27cRUfWzir9JsgZgwHgcupmgsrA2UfCvI',
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          form: {
-            'message': '1'
-          }
-        };
-        request(options, function (error, response) {
-          if (error) throw new Error(error);
-          console.log(response.body);
-        });
-        console.log("done testing")
       })
+
       let body = JSON.stringify({
         replyToken: replyToken,
         messages: [{

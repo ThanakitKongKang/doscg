@@ -31,6 +31,7 @@ app.post('/webhook', (req, res) => {
   let replyToken = req.body.events[0].replyToken
   let msg = req.body.events[0].message.text
   reply(replyToken, msg)
+  res.sendStatus(200)
 })
 
 function reply (replyToken, msg) {
@@ -48,24 +49,49 @@ function reply (replyToken, msg) {
         console.log(user)
         if (user.users) {
           user.users.map(ACCESS_TOKEN => {
-            headers = {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'Authorization': 'Bearer ' + ACCESS_TOKEN
-            }
-            console.log(ACCESS_TOKEN)
-            let body = {
-              message: 'Can\'t answer customer a question!'
-            }
-            request.post({
-              url: 'https://notify-api.line.me/api/notify',
-              headers: headers,
-              body: body
-            }, (err, res, body) => {
-              console.log('status = ' + res.statusCode, err)
+            let bodyNoti = qs.stringify({
+              'message': 'Can\'t answer customer a question!'
             })
+            console.log(bodyNoti)
+            var config = {
+              method: 'post',
+              url: 'https://notify-api.line.me/api/notify',
+              headers: {
+                'Authorization': 'Bearer ' + ACCESS_TOKEN,
+                'Content-Type': 'application/x-www-form-urlencoded'
+              },
+              data: bodyNoti
+            }
+            console.log(config)
+            axios(config)
+              .then(function (response) {
+                console.log(JSON.stringify(response.data))
+              })
+              .catch(function (error) {
+                console.log(error)
+              })
           })
         }
+
+        console.log('testing')
+        var options = {
+          'method': 'POST',
+          'url': 'https://notify-api.line.me/api/notify',
+          'headers': {
+            'Authorization': 'Bearer 57ER1juQzf27cRUfWzir9JsgZgwHgcupmgsrA2UfCvI',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          form: {
+            'message': '1'
+          }
+        }
+        request(options, function (error, response) {
+          if (error) throw new Error(error)
+          console.log(response.body)
+        })
+        console.log('done testing')
       })
+
       let body = JSON.stringify({
         replyToken: replyToken,
         messages: [{
@@ -274,9 +300,9 @@ app.post('/line-callback', (req, res) => {
     })
 })
 
-const port = process.env.PORT || 4000
+// const port = process.env.PORT || 4000
 // heroku production
-// const port = process.env.PORT || 80
+const port = process.env.PORT || 80
 app.listen(port, () => {
   console.log(`listening on ${port}`)
 })
