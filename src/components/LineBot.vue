@@ -68,7 +68,8 @@ export default {
       },
       isResult: false,
       href: LINE_API_URI + '&response_type=' + q.response_type + '&client_id=' + q.client_id + '&redirect_uri=' + q.redirect_uri + '&scope=' + q.scope + '&state=' + q.state,
-      showDismissibleAlert: false
+      showDismissibleAlert: false,
+      showSuccessAlert: false
     }
   },
   async created () {
@@ -81,7 +82,7 @@ export default {
           if (res.results === 'INVALID_CODE') {
             this.showDismissibleAlert = true
           } else {
-            this.showDismissibleAlert = true
+            this.showSuccessAlert = true
           }
         })
       }

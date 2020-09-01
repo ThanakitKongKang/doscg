@@ -1,1 +1,1 @@
-server:  node /src/controllers/DOSCG.js
+web:  node /src/controllers/DOSCG.js
