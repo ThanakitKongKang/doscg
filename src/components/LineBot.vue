@@ -4,16 +4,18 @@
     <div>
       <b-card
         class="mt-5 w-50 mx-auto"
-        header="Line Bot noti"
+        header="How to test this function"
       >
         <b-list-group>
-          <b-list-group-item
-            v-show="isResult"
-            class="m-0"
-          >B = {{ results }}
+          <b-list-group-item class="m-0">
+            Add bot ID :@355frgxr
           </b-list-group-item>
-          <pre v-show="!isResult">No data</pre>
-
+          <b-list-group-item class="m-0">
+            get line notify
+          </b-list-group-item>
+          <b-list-group-item class="m-0">
+            try to send message to bot
+          </b-list-group-item>
         </b-list-group>
       </b-card>
     </div>
