@@ -1,1 +1,1 @@
-web : node src/controllers/DOSCG.js
+web : node DOSCG.js
