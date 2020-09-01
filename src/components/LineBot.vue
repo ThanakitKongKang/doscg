@@ -35,9 +35,15 @@
         </b-list-group>
       </b-card>
       <b-alert
+        dismissible
+        v-model="showSuccessAlert"
+        variant="success"
+      >"doscg" is now connected, you can test line bot</b-alert>
+      <b-alert
+        dismissible
         v-model="showDismissibleAlert"
         variant="danger"
-      >Something went wrong, please <a href="/line-bot">try again</a>.</b-alert>
+      >Something went wrong, please <a href="/line-bot">try again</a></b-alert>
     </div>
   </div>
 </template>
@@ -73,6 +79,8 @@ export default {
       if (this.$route.query.code) {
         api.lineCallback(this.$route.query.code).then((res) => {
           if (res.results === 'INVALID_CODE') {
+            this.showDismissibleAlert = true
+          } else {
             this.showDismissibleAlert = true
           }
         })

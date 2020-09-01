@@ -46,6 +46,7 @@
           </b-input-group>
 
           <b-alert
+          dismissible
             v-model="showDismissibleAlert"
             variant="danger"
           >Something went wrong!</b-alert>

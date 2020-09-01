@@ -22,6 +22,7 @@
 
           </div>
           <b-alert
+            dismissible
             v-model="showDismissibleAlert"
             variant="danger"
           >Numbers are not valid sequences!</b-alert>
