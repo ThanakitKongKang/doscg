@@ -229,7 +229,7 @@ app.post('/line-callback', (req, res) => {
   let data = qs.stringify({
     'grant_type': 'authorization_code',
     'code': code,
-    'redirect_uri': 'http://localhost:8080/line-callback',
+    'redirect_uri': 'https://doscg-linebot.herokuapp.com/line-callback',
     'client_id': 'ug5Dj546tVlA0b9ONLqHwI',
     'client_secret': 'Pqwp0ypsl3JZxPEiCocIsfh7ANOiAgVOmWuoORWEyBD'
   })
