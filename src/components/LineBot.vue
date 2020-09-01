@@ -58,7 +58,7 @@ export default {
     let q = {
       'response_type': 'code',
       'client_id': 'ug5Dj546tVlA0b9ONLqHwI',
-      'redirect_uri': 'http://localhost:8080/line-callback',
+      'redirect_uri': 'https://doscg-linebot.herokuapp.com/line-callback',
       'scope': 'notify',
       'state': 'abcdef123456'
     }
