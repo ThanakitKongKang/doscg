@@ -3,9 +3,23 @@ const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
 const fs = require('fs')
-const port = process.env.PORT || 4000
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+app.post('/users', (req, res) => {
+  fs.readFile('./src/assets/user.json', 'utf-8', (err, data) => {
+    if (err) {
+      throw err
+    }
+    const user = JSON.parse(data.toString())
+    if (user.users) {
+      res.json({
+        users: user.users
+      })
+    }
+  })
+})
+
 app.post('/webhook', (req, res) => {
   let reply_token = req.body.events[0].replyToken
   let msg = req.body.events[0].message.text
@@ -13,7 +27,7 @@ app.post('/webhook', (req, res) => {
   res.sendStatus(200)
 })
 
-app.listen(port)
+
 function reply (reply_token, msg) {
   let headers = {
     'Content-Type': 'application/json',
@@ -81,3 +95,8 @@ function reply (reply_token, msg) {
     });
   }
 }
+
+const port = process.env.PORT || 3000
+app.listen(port, () => {
+  console.log(`listening on ${port}`)
+})
