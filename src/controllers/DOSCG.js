@@ -11,6 +11,11 @@ app.use(morgan('tiny'))
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'https://doscg-linebot.herokuapp.com/')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  next()
+})
 const PATH_USER_JSON = '../../src/assets/user.json'
 
 app.get('/users', (req, res) => {

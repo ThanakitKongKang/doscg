@@ -12,7 +12,10 @@ export default {
     return client({
       method,
       url: resource,
-      data
+      data,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      }
     }).then(req => {
       return req.data
     })
