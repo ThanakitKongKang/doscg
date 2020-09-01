@@ -16,9 +16,11 @@
     "bootstrap-vue": "^2.16.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "fs": "0.0.1-security",
     "google-maps": "^4.3.2",
     "google-maps-api-loader": "^1.1.1",
     "morgan": "^1.10.0",
+    "qs": "^6.9.4",
     "request": "^2.88.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"

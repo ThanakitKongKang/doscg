@@ -8,50 +8,75 @@
       >
         <b-list-group>
           <b-list-group-item class="m-0">
-            Add bot ID :@355frgxr
+            Add bot ID :@355frgxr<br>
+            <div
+              class="line-it-button mt-3"
+              data-lang="en"
+              data-type="friend"
+              data-lineid="@355frgxr"
+              data-count="true"
+              style="display: none;"
+            ></div>
           </b-list-group-item>
           <b-list-group-item class="m-0">
             get line notify
+            <a
+              ref="submit"
+              type="button"
+              variant="success"
+              class="mt-3"
+              v-bind:href="href"
+            >Register</a>
           </b-list-group-item>
           <b-list-group-item class="m-0">
             try to send message to bot
           </b-list-group-item>
         </b-list-group>
       </b-card>
+      <b-alert
+        v-model="showDismissibleAlert"
+        variant="danger"
+      >Something went wrong, please <a href="/line-bot">try again</a>.</b-alert>
     </div>
   </div>
 </template>
 
 <script>
-// import api from '@/api'
+import api from '@/api'
+
 export default {
   name: 'LineBot',
   data () {
+    let LINE_API_URI = 'https://notify-bot.line.me/oauth/authorize?'
+    let q = {
+      'response_type': 'code',
+      'client_id': 'ug5Dj546tVlA0b9ONLqHwI',
+      'redirect_uri': 'http://localhost:8080/line-callback',
+      'scope': 'notify',
+      'state': 'abcdef123456'
+    }
     return {
       title: 'Line Bot',
       results: {
       },
       isResult: false,
+      href: LINE_API_URI + '&response_type=' + q.response_type + '&client_id=' + q.client_id + '&redirect_uri=' + q.redirect_uri + '&scope=' + q.scope + '&state=' + q.state,
       showDismissibleAlert: false
     }
   },
   async created () {
-    // this.callBack()
+    this.callBack()
   },
   methods: {
-    // callBack (evt) {
-    //   api.webHook(this.form.values).then((res) => {
-    //     if (!res.results) {
-    //       this.showDismissibleAlert = true
-    //       this.results = 'No data'
-    //       this.isResult = false
-    //     } else {
-    //       this.showDismissibleAlert = false
-    //       this.results = JSON.parse(res.results).result
-    //       this.isResult = true
-    //     }
-    //   })
-    // }
+    callBack () {
+      if (this.$route.query.code) {
+        api.lineCallback(this.$route.query.code).then((res) => {
+          if (res.results === 'INVALID_CODE') {
+            this.showDismissibleAlert = true
+          }
+        })
+      }
+    }
   }
 }
 </script>

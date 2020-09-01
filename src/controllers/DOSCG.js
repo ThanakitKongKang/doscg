@@ -1,8 +1,11 @@
 const express = require('express')
+const axios = require('axios')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const app = express()
+const fs = require('fs')
+const qs = require('qs')
 
 app.use(morgan('tiny'))
 app.use(cors())
@@ -124,6 +127,56 @@ app.post('/findValues', (req, res) => {
       results: false
     })
   }
+})
+
+app.post('/line-callback', (req, res) => {
+  const { body } = req
+  const code = body.code
+  let LINE_API_TOKEN = 'https://notify-bot.line.me/oauth/token'
+  let data = qs.stringify({
+    'grant_type': 'authorization_code',
+    'code': code,
+    'redirect_uri': 'http://localhost:8080/line-callback',
+    'client_id': 'ug5Dj546tVlA0b9ONLqHwI',
+    'client_secret': 'Pqwp0ypsl3JZxPEiCocIsfh7ANOiAgVOmWuoORWEyBD'
+  })
+  let config = {
+    method: 'post',
+    url: LINE_API_TOKEN,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: data
+  }
+  axios(config)
+    .then(function (response) {
+      const accessToken = response.data.access_token
+      fs.readFile('././src/assets/user.json', 'utf-8', (err, data) => {
+        if (err) {
+          throw err
+        }
+        const user = JSON.parse(data.toString())
+        user.users.push(accessToken.toString())
+        const jsonData = JSON.stringify(user)
+        fs.writeFile('././src/assets/user.json', jsonData, (err) => {
+          if (err) {
+            throw err
+          }
+          console.log('JSON data is saved.')
+        })
+      })
+      res.json({
+        results: JSON.stringify({ res })
+      })
+    })
+    .catch(function (error) {
+      if (error.response) {
+        console.log(error.response.data.message)
+        res.json({
+          results: 'INVALID_CODE'
+        })
+      }
+    })
 })
 
 const port = process.env.PORT || 4000

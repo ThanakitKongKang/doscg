@@ -12,6 +12,7 @@ app.post('/webhook', (req, res) => {
   reply(reply_token, msg)
   res.sendStatus(200)
 })
+
 app.listen(port)
 function reply (reply_token, msg) {
   let headers = {
@@ -20,22 +21,31 @@ function reply (reply_token, msg) {
   }
   if (msg.toLowerCase() !== 'hey') {
     setTimeout(() => {
-      headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Bearer pHkFoFvgKNbtBJ2vDa8589Z0CioVaiX3yJfb4H4tOet'
-      }
-      let body = JSON.stringify({
-        // to: 'Ua713b8f663a3db5709fd064dc588139e',
-        messages: 'Can\'t answer customer question'
+      fs.readFile('./src/assets/user.json', 'utf-8', (err, data) => {
+        if (err) {
+          throw err
+        }
+        const user = JSON.parse(data.toString())
+        user.users.map(ACCESS_TOKEN => {
+          headers = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + ACCESS_TOKEN
+          }
+          let body = JSON.stringify({
+            messages: 'Can\'t answer customer question'
+          })
+          request.post({
+            url: 'https://notify-api.line.me/api/notify',
+            headers: headers,
+            body: body
+          }, (err, res, body) => {
+            console.log('status = ' + res.statusCode);
+          });
+        });
+
       })
-      request.post({
-        url: 'https://notify-api.line.me/api/notify',
-        // url: 'https://api.line.me/v2/bot/message/push',
-        headers: headers,
-        body: body
-      }, (err, res, body) => {
-        console.log('status = ' + res.statusCode);
-      });
+
+
     }, 10000);
   } else {
     let body = JSON.stringify({

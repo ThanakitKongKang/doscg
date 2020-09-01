@@ -30,6 +30,11 @@ export default new Router({
       path: '/line-bot',
       name: 'LineBot',
       component: LineBot
+    },
+    {
+      path: '/line-callback',
+      name: 'LineBot',
+      component: LineBot
     }
   ]
 })
