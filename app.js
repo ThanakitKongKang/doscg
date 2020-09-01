@@ -31,6 +31,7 @@ app.post('/webhook', (req, res) => {
   let replyToken = req.body.events[0].replyToken
   let msg = req.body.events[0].message.text
   reply(replyToken, msg)
+  res.sendStatus(200)
 })
 
 function reply (replyToken, msg) {
@@ -274,9 +275,9 @@ app.post('/line-callback', (req, res) => {
     })
 })
 
-const port = process.env.PORT || 4000
+// const port = process.env.PORT || 4000
 // heroku production
-// const port = process.env.PORT || 80
+const port = process.env.PORT || 80
 app.listen(port, () => {
   console.log(`listening on ${port}`)
 })
